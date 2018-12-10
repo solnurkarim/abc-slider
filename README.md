@@ -18,7 +18,7 @@ abcSlider({
     btnPrev: 'button-id'
 })
 ```
-All options except `sliderElem` are `optional`.
+Setting `sliderElem` is mandatory. Everything else is `optional`.
 
 Set `showNav` to `true` to enable default nav buttons. To set your own buttons, use `btnPrev`/`btnNext` options.
 
