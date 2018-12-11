@@ -147,7 +147,7 @@ function abcSlider(config) {
 
 			var fadeInOpacityCounter = 0;
 			var sliderObj = this;
-			var fadeInTimer = setInterval(fadeInStep, 50);
+			var fadeInTimer = setInterval(fadeInStep, 30);
 
 			function fadeInStep() {
 				if (Number.parseFloat(fadeInOpacityCounter).toFixed(1) == 1) {
@@ -155,7 +155,7 @@ function abcSlider(config) {
 					fadeInOpacityCounter = 0;
 					sliderObj.transitionIsActive = false;
 				} else {
-					fadeInOpacityCounter += 0.1;
+					fadeInOpacityCounter += 0.05;
 					sliderObj.nextSlide.style.opacity = Number.parseFloat(fadeInOpacityCounter).toFixed(1);
 				}
 			}
@@ -163,16 +163,16 @@ function abcSlider(config) {
 		fadeOut: function () {
 			var fadeOutOpacityCounter = 1;
 			var sliderObj = this;
-			var fadeOutTimer = setInterval(fadeOutStep, 50);
-			sliderObj.currentSlide.classList.remove('show');
+			var fadeOutTimer = setInterval(fadeOutStep, 30);
+			// sliderObj.currentSlide.classList.remove('show');
 
 			function fadeOutStep() {
 				if (Number.parseFloat(fadeOutOpacityCounter).toFixed(1) == 0) {
 					clearInterval(fadeOutTimer);
 					fadeOutOpacityCounter = 1;
-					// sliderObj.currentSlide.classList.remove('show');
+					sliderObj.currentSlide.classList.remove('show');
 				} else {
-					fadeOutOpacityCounter -= 0.1;
+					fadeOutOpacityCounter -= 0.05;
 					sliderObj.currentSlide.style.opacity = Number.parseFloat(fadeOutOpacityCounter).toFixed(1);
 				}
 			}
