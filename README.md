@@ -1,5 +1,8 @@
 Currently supports full-width `fade`/`slide` transition types.
 
+### Demo:
+https://solnurkarim.github.io/abc-slider/
+
 ### Installation process:
 ```html
 <div id="your-slider-id" class="abc-slider">
