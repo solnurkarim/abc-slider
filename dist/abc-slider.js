@@ -31,6 +31,7 @@ function abcSlider(config) {
 								this.fadeIn();
 							}
 						}
+
 					} else {
 						if (this.currentSlide.previousElementSibling !== null) {
 							this.nextSlide = this.currentSlide.previousElementSibling;
@@ -47,6 +48,16 @@ function abcSlider(config) {
 							} else {
 								this.fadeOut();
 								this.fadeIn();
+							}
+						}
+					}
+
+					if (config.indicators) {
+						for (var ind in this.sliderElem.children) {
+							if (this.sliderElem.children[ind].classList.contains('show')) {
+								this.activeIndicator.classList.remove('active')
+								this.activeIndicator = indicators.children[ind];
+								this.activeIndicator.classList.add('active');
 							}
 						}
 					}
@@ -76,11 +87,13 @@ function abcSlider(config) {
 			var fromPos = this.sliderElem.scrollLeft;
 			var toPos = this.nextSlide.offsetLeft;
 			var step = (toPos - fromPos) / 50;
+
 			if (this.sliderElem.scrollWidth - this.sliderElem.scrollLeft < this.sliderElem.clientWidth + step) {
 				this.nextSlide = this.sliderElem.firstElementChild;
 				this.slideLeft();
 				return 0;
 			}
+
 			this.currentSlide.classList.remove('show');
 			this.nextSlide.classList.add('show');
 			var sliderObj = this;
@@ -111,6 +124,7 @@ function abcSlider(config) {
 				this.slideLeft();
 				return 0;
 			}
+
 			this.currentSlide.classList.remove('show');
 			this.nextSlide.classList.add('show');
 			var sliderObj = this;
@@ -150,12 +164,13 @@ function abcSlider(config) {
 			var fadeOutOpacityCounter = 1;
 			var sliderObj = this;
 			var fadeOutTimer = setInterval(fadeOutStep, 50);
+			sliderObj.currentSlide.classList.remove('show');
 
 			function fadeOutStep() {
 				if (Number.parseFloat(fadeOutOpacityCounter).toFixed(1) == 0) {
 					clearInterval(fadeOutTimer);
 					fadeOutOpacityCounter = 1;
-					sliderObj.currentSlide.classList.remove('show');
+					// sliderObj.currentSlide.classList.remove('show');
 				} else {
 					fadeOutOpacityCounter -= 0.1;
 					sliderObj.currentSlide.style.opacity = Number.parseFloat(fadeOutOpacityCounter).toFixed(1);
@@ -178,6 +193,28 @@ function abcSlider(config) {
 	}
 	content.children[0].classList.add("show");
 	slider.sliderElem = content;
+
+	if (config.indicators) {
+		var indicators = document.createElement('div');
+		indicators.classList.add('abc-slider_indicators');
+
+		var slidesLen;
+		if (config.slidesPerView)
+			slidesLen = Math.ceil(content.children.length / config.slidesPerView);
+		else slidesLen = content.children.length;
+
+		while (slidesLen) {
+			var indicator = document.createElement('span');
+			indicator.classList.add('abc-slider__indicator');
+			indicators.appendChild(indicator);
+			slidesLen--;
+		}
+
+		indicators.children[0].classList.add('active');
+		slider.activeIndicator = indicators.children[0];
+
+		parentNode.prepend(indicators);
+	}
 
 	if (config.showNav) {
 		var controls = document.createElement('div');
@@ -211,12 +248,15 @@ function abcSlider(config) {
 			elem.style.width = '100%';
 		}
 	} else if (slider.transitionType === 'slide-overlap') {
-		for (var i = 1; i < slider.sliderElem.children.length; i++) {
-			slider.sliderElem.children[i].style.marginLeft = '-100px';
+		for (var i = 0; i < slider.sliderElem.children.length; i++) {
+			// slider.sliderElem.children[i].style.marginLeft = '-100px';
+			slider.sliderElem.children[i].style.width = '50%';
 		}
 	} else if (slider.transitionType === 'slide') {
 		for (var elem of slider.sliderElem.children) {
-			elem.style.width = '100%';
+			if (config.slidesPerView) {
+				elem.style.width = "calc(100% / " + config.slidesPerView + ")"
+			} else elem.style.width = '100%';
 		}
 	}
 

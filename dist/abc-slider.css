@@ -2,6 +2,26 @@
 	position: relative;
 }
 
+.abc-slider_indicators {
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.abc-slider__indicator {
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+	border-radius: 50%;
+	background: rgba(53, 53, 53, 0.8);
+	margin: 0 3px;
+}
+
+.abc-slider__indicator.active {
+	background: rgba(255, 255, 255, 0.8);
+}
+
 .abc-slider_content {
 	height: 100%;
 	width: 100%;
