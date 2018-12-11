@@ -16,6 +16,7 @@ https://solnurkarim.github.io/abc-slider/
 abcSlider({
     sliderElem: 'your-slider-id',
     showNav: Boolean,
+    indicators: Boolean,
     slideInterval: Number,
     btnNext: 'button-id',
     btnPrev: 'button-id'
