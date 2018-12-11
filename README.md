@@ -31,4 +31,3 @@ Set `showNav` to `true` to enable default nav buttons. To set your own buttons, 
 - [ ] Rewrite slide gateway to use children data-indexes
 - [ ] Clickable indicators
 - [ ] Multiple slides per view
-- [ ] Cross-browser compatibility
