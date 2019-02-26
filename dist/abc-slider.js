@@ -1,6 +1,7 @@
 function abcSlider(config) {
 	var slider = {
 		sliderElem: document.querySelector(config.sliderElem),
+		content: undefined,
 		transitionType: config.transitionType ? config.transitionType : 'fade',
 		transitionIsActive: false,
 		currentSlide: undefined,
@@ -53,9 +54,9 @@ function abcSlider(config) {
 					}
 
 					if (config.indicators) {
-						for (var ind in this.sliderElem.children) {
-							if (this.sliderElem.children[ind].classList.contains('show')) {
-								this.activeIndicator.classList.remove('active')
+						for (var ind = 0; ind < this.sliderElem.children.length; ind++) {
+							if (this.sliderElem.children[ind] == this.nextSlide) {
+								this.activeIndicator.classList.remove('active');
 								this.activeIndicator = indicators.children[ind];
 								this.activeIndicator.classList.add('active');
 							}
@@ -63,13 +64,14 @@ function abcSlider(config) {
 					}
 
 					if (config.slideInterval) {
-						clearInterval(this.sliderTimer);
+						clearInterval(this.sliderTimerId);
 						var sliderObj = this;
 
 						function setTimer() {
 							sliderObj.slide('next')
 						}
-						this.sliderTimer = setInterval(
+
+						this.sliderTimerId = setInterval(
 							setTimer, config.slideInterval);
 					}
 
@@ -77,9 +79,10 @@ function abcSlider(config) {
 				}
 			}
 		},
+		sliderTimerId: undefined,
 		sliderTimer: function () {
 			var sliderObj = this;
-			return setInterval(function () {
+			this.sliderTimerId = setInterval(function () {
 				sliderObj.slide('next');
 			}, config.slideInterval)
 		},
@@ -164,7 +167,6 @@ function abcSlider(config) {
 			var fadeOutOpacityCounter = 1;
 			var sliderObj = this;
 			var fadeOutTimer = setInterval(fadeOutStep, 30);
-			// sliderObj.currentSlide.classList.remove('show');
 
 			function fadeOutStep() {
 				if (Number.parseFloat(fadeOutOpacityCounter).toFixed(1) == 0) {
